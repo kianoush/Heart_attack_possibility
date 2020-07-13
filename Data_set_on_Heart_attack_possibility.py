@@ -38,35 +38,52 @@ print(raw_data.columns)
 for value in raw_data.columns:
     values, count = np.unique(raw_data[value], return_counts=True)
     print(value, values, count)
+    print(sum(count))
 
 #sns.pairplot(raw_data)
 
+"""
+Divide age to 5 
+"""
+for ages in (raw_data.age):
+    if ages <= 51:
+        raw_data['age'] = raw_data.replace(ages, 0)
+    if (ages <= 59) and (52 <= ages):
+        raw_data['age'] = raw_data.replace(ages, 1)
+    if ages <= 77 and (60 <= ages):
+        raw_data['age'] = raw_data.replace(ages, 2)
 
-box_plot_data=[raw_data['trestbps'], raw_data['thalach']]
-plt.boxplot(box_plot_data, patch_artist=True, labels=['trestbps', 'thalach'])
-plt.show()
+values, count = np.unique(raw_data['age'], return_counts=True)
+print('age', values, count)
 
-box_plot_data=[raw_data['age']]
+
+
+# box_plot_data = [raw_data['trestbps'], raw_data['thalach']]
+# plt.boxplot(box_plot_data, patch_artist=True, labels=['trestbps', 'thalach'])
+# plt.show()
+#
+box_plot_data = [raw_data['age']]
 plt.boxplot(box_plot_data, patch_artist=True, labels=['age'])
 plt.show()
-
-box_plot_data = [raw_data[ 'chol']]
-plt.boxplot(box_plot_data, patch_artist=True, labels=['chol'])
-plt.show()
-
-box_plot_data = [raw_data['oldpeak']]
-plt.boxplot(box_plot_data, patch_artist=True, labels=['oldpeak'])
-plt.show()
-
-box_plot_data = [raw_data['ca']]
-plt.boxplot(box_plot_data, patch_artist=True, labels=['ca'])
-plt.show()
-
-box_plot_data=[raw_data['sex'], raw_data['cp'], raw_data['fbs'],
-               raw_data['restecg'],raw_data['exang'],raw_data[ 'slope'],
-               raw_data['thal'], raw_data['target']]
-plt.boxplot(box_plot_data)
-plt.show()
+#
+# box_plot_data = [raw_data['chol']]
+# plt.boxplot(box_plot_data, patch_artist=True, labels=['chol'])
+# plt.show()
+#
+# box_plot_data = [raw_data['oldpeak']]
+# plt.boxplot(box_plot_data, patch_artist=True, labels=['oldpeak'])
+# plt.show()
+#
+# box_plot_data = [raw_data['ca']]
+# plt.boxplot(box_plot_data, patch_artist=True, labels=['ca'])
+# plt.show()
+#
+# box_plot_data = [raw_data['sex'], raw_data['cp'], raw_data['fbs'],
+#                raw_data['restecg'], raw_data['exang'], raw_data['slope'],
+#                raw_data['thal'], raw_data['target']]
+#
+# plt.boxplot(box_plot_data)
+# plt.show()
 
 
 plt.show()
