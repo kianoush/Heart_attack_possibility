@@ -27,15 +27,19 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
-
+from mlxtend.plotting import scatterplotmatrix
+import seaborn as sns
 
 print(os.listdir())
 
 raw_data = pd.read_csv('datasets_heart.csv')
 print(raw_data.columns)
 
-plt.bar(raw_data['age'], raw_data['trestbps'])
-plt.show()
+for value in raw_data.columns:
+    values, count = np.unique(raw_data[value], return_counts=True)
+    print(value, values, count)
+
+#sns.pairplot(raw_data)
 
 
 box_plot_data=[raw_data['trestbps'], raw_data['thalach']]
@@ -54,8 +58,12 @@ box_plot_data = [raw_data['oldpeak']]
 plt.boxplot(box_plot_data, patch_artist=True, labels=['oldpeak'])
 plt.show()
 
+box_plot_data = [raw_data['ca']]
+plt.boxplot(box_plot_data, patch_artist=True, labels=['ca'])
+plt.show()
+
 box_plot_data=[raw_data['sex'], raw_data['cp'], raw_data['fbs'],
-               raw_data['restecg'],raw_data['exang'],raw_data[ 'slope'], raw_data['ca'],
+               raw_data['restecg'],raw_data['exang'],raw_data[ 'slope'],
                raw_data['thal'], raw_data['target']]
 plt.boxplot(box_plot_data)
 plt.show()
