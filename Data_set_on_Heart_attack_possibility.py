@@ -29,7 +29,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.plotting import scatterplotmatrix
 import seaborn as sns
-
+import Data_cleaning
 print(os.listdir())
 
 raw_data = pd.read_csv('datasets_heart.csv')
@@ -45,16 +45,7 @@ for value in raw_data.columns:
 """
 Divide age to 5 
 """
-for ages in (raw_data.age):
-    if ages <= 51:
-        raw_data['age'] = raw_data.replace(ages, 0)
-    if (ages <= 59) and (52 <= ages):
-        raw_data['age'] = raw_data.replace(ages, 1)
-    if ages <= 77 and (60 <= ages):
-        raw_data['age'] = raw_data.replace(ages, 2)
-
-values, count = np.unique(raw_data['age'], return_counts=True)
-print('age', values, count)
+Data_cleaning.age(raw_data)
 
 
 
