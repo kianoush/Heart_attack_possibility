@@ -10,11 +10,11 @@ def trestbps(x):
             x = x.replace(item, 0)
         if (121 <= item) and (item <= 138):
             x = x.replace(item, 1)
-        if (139 <= item)and (item <= 200):
+        if (139 <= item) and (item <= 200):
             x = x.replace(item, 2)
     values, count = np.unique(x, return_counts=True)
-    print('trestbps', values, count)
-    return
+    #print('trestbps', values, count)
+    return x
 
 
 
@@ -28,8 +28,8 @@ def age(x):
             x = x.replace(ages, 2)
 
     values, count = np.unique(x, return_counts=True)
-    print('age', values, count)
-    return
+    #print('age', values, count)
+    return x
 
 
 
@@ -44,8 +44,8 @@ def chol(x):
             x = x.replace(item, 2)
 
     values, count = np.unique(x, return_counts=True)
-    print('chol', values, count)
-    return
+    #print('chol', values, count)
+    return x
 
 
 def thalach(x):
@@ -58,5 +58,19 @@ def thalach(x):
             x = x.replace(item, 2)
 
     values, count = np.unique(x, return_counts=True)
-    print('thalach', values, count)
-    return
+    #print('thalach', values, count)
+    return x
+
+
+def oldpeak(x):
+    for item in (x):
+        if item == 0:
+            x = x.replace(item, 0)
+        if (0.1 <= item) and (item <= 1.3):
+            x = x.replace(item, 1)
+        if (1.4 <= item) and (item <= 6.2):
+            x = x.replace(item, 2)
+
+    values, count = np.unique(x, return_counts=True)
+    #print('oldpeak', values, count)
+    return x

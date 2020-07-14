@@ -38,24 +38,10 @@ print(raw_data.columns)
 
 for value in raw_data.columns:
     values, count = np.unique(raw_data[value], return_counts=True)
-    print(value, values, count)
-    print(sum(count))
+    #print(value, values, count)
+    #print(sum(count))
 
 #sns.pairplot(raw_data)
-
-"""
-Divide age to 5 
-"""
-
-Data_cleaning.trestbps(raw_data.trestbps)
-Data_cleaning.age(raw_data.age)
-clean_outlier_data_of_chol = np.where(raw_data.chol == 564)
-raw_data = raw_data.drop(clean_outlier_data_of_chol[0][0])
-print(raw_data.info())
-Data_cleaning.chol(raw_data.chol)
-Data_cleaning.thalach(raw_data.thalach)
-
-
 
 # box_plot_data = [raw_data['trestbps'], raw_data['thalach']]
 # plt.boxplot(box_plot_data, patch_artist=True, labels=['trestbps', 'thalach'])
@@ -83,5 +69,67 @@ Data_cleaning.thalach(raw_data.thalach)
 #
 # plt.boxplot(box_plot_data)
 # plt.show()
+"""
+Divide age to 5 
+"""
+
+raw_data.trestbps = Data_cleaning.trestbps(raw_data.trestbps)
+raw_data.age =Data_cleaning.age(raw_data.age)
+clean_outlier_data_of_chol = np.where(raw_data.chol == 564)
+raw_data = raw_data.drop(clean_outlier_data_of_chol[0][0])
+raw_data.chol =Data_cleaning.chol(raw_data.chol)
+raw_data.thalach =Data_cleaning.thalach(raw_data.thalach)
+raw_data.oldpeak =Data_cleaning.oldpeak(raw_data.oldpeak)
+
+print(raw_data.info())
+
+
+df = raw_data.iloc[:, :13]
+label = raw_data.iloc[:, 13]
+
+"""
+Split data
+"""
+x_train, x_test, y_train, y_test = train_test_split(df, label, test_size=0.2, shuffle=True)
+x_train, x_valid, y_train, y_valid = train_test_split(x_train, y_train, test_size=0.2, shuffle=True)
+
+
+x_train = torch.tensor(x_train.values).float()
+x_test = torch.tensor(x_test.values).float()
+x_valid = torch.tensor(x_valid.values).float()
+
+y_train = torch.tensor(y_train.values).float()
+x_test = torch.tensor(x_test.values).float()
+x_valid = torch.tensor(x_valid.values).float()
+
+Sample_num = x_train.shape[1]
+Class_num = 2
+Hiddenl = 7
+#h1 =5
+
+"""
+Model
+"""
+
+model = torch.nn.Sequential(torch.nn.Linear(Sample_num, Hiddenl),
+                            torch.nn.ReLU(),
+                            torch.nn.Linear(Hiddenl, Class_num),
+                            torch.nn.Sigmoid())
+
+"""
+Loss
+"""
+loss = torch.nn.CrossEntropyLoss()
+
+
+
+"""
+Optimizer
+"""
+#optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+optimimizer = torch.optim.adam(model.parameters(), ls=0.001)
+
+
+
 
 print('END!')
