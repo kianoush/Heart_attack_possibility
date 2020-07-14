@@ -53,7 +53,7 @@ clean_outlier_data_of_chol = np.where(raw_data.chol == 564)
 raw_data = raw_data.drop(clean_outlier_data_of_chol[0][0])
 print(raw_data.info())
 Data_cleaning.chol(raw_data.chol)
-
+Data_cleaning.thalach(raw_data.thalach)
 
 
 

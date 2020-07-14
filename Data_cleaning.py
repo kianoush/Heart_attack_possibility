@@ -46,3 +46,17 @@ def chol(x):
     values, count = np.unique(x, return_counts=True)
     print('chol', values, count)
     return
+
+
+def thalach(x):
+    for item in (x):
+        if item <= 142:
+            x = x.replace(item, 0)
+        if (143 <= item) and (item<= 161):
+            x = x.replace(item, 1)
+        if (162 <= item) and (item <= 202):
+            x = x.replace(item, 2)
+
+    values, count = np.unique(x, return_counts=True)
+    print('thalach', values, count)
+    return
