@@ -36,19 +36,24 @@ print(os.listdir())
 raw_data = pd.read_csv('datasets_heart.csv')
 print(raw_data.columns)
 
-# for value in raw_data.columns:
-#     values, count = np.unique(raw_data[value], return_counts=True)
-#     print(value, values, count)
-#     print(sum(count))
+for value in raw_data.columns:
+    values, count = np.unique(raw_data[value], return_counts=True)
+    print(value, values, count)
+    print(sum(count))
 
 #sns.pairplot(raw_data)
 
 """
 Divide age to 5 
 """
-Data_cleaning.clean_trestbps(raw_data.trestbps)
-Data_cleaning.bage(raw_data.age)
-print()
+
+Data_cleaning.trestbps(raw_data.trestbps)
+Data_cleaning.age(raw_data.age)
+clean_outlier_data_of_chol = np.where(raw_data.chol == 564)
+raw_data = raw_data.drop(clean_outlier_data_of_chol[0][0])
+print(raw_data.info())
+Data_cleaning.chol(raw_data.chol)
+
 
 
 

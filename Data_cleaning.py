@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-def clean_trestbps(x):
+def trestbps(x):
     for item in (x):
         if item <= 120:
             x = x.replace(item, 0)
@@ -18,8 +18,7 @@ def clean_trestbps(x):
 
 
 
-
-def bage(x):
+def age(x):
     for ages in (x):
         if ages <= 51:
             x = x.replace(ages, 0)
@@ -30,4 +29,20 @@ def bage(x):
 
     values, count = np.unique(x, return_counts=True)
     print('age', values, count)
+    return
+
+
+
+def chol(x):
+
+    for item in (x):
+        if item <= 220:
+            x = x.replace(item, 0)
+        if (221 <= item) and (item<= 260):
+            x = x.replace(item, 1)
+        if (261 <= item) and (item <= 417):
+            x = x.replace(item, 2)
+
+    values, count = np.unique(x, return_counts=True)
+    print('chol', values, count)
     return
