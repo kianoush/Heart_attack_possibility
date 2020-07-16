@@ -108,71 +108,71 @@ for i in range(5, 20):
     for j in range(5, 15):
         for k in range (100):
 
-        Sample_num = x_train.shape[1]
-        Class_num = 2
-        Hiddenl = i
-        Hiddenl01 = j
+            Sample_num = x_train.shape[1]
+            Class_num = 2
+            Hiddenl = i
+            Hiddenl01 = j
 
 
-        """
-        Model
-        """
+            """
+            Model
+            """
 
-        model = torch.nn.Sequential(torch.nn.Linear(Sample_num, Hiddenl),
-                                    torch.nn.ReLU(),
-                                    torch.nn.Linear(Hiddenl, Hiddenl01),
-                                    torch.nn.ReLU(),
-                                    torch.nn.Linear(Hiddenl01, Class_num),
-                                    torch.nn.Sigmoid())
+            model = torch.nn.Sequential(torch.nn.Linear(Sample_num, Hiddenl),
+                                        torch.nn.ReLU(),
+                                        torch.nn.Linear(Hiddenl, Hiddenl01),
+                                        torch.nn.ReLU(),
+                                        torch.nn.Linear(Hiddenl01, Class_num),
+                                        torch.nn.Sigmoid())
 
-        """
-        Loss
-        """
-        loss = torch.nn.CrossEntropyLoss()
-        #loss= torch.nn.MSELoss()
-
-
-
-        """
-        Optimizer
-        """
-        #optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-        optimizer = torch.optim.Adam(model.parameters(), lr=p)
-        p +=.2
-        """
-        Training
-        """
-
-        epochs_num = 200
-        sample_num_train = x_train.shape[0]
-        sample_num_test = x_test.shape[0]
-        sample_num_valid = x_valid.shape[0]
-
-
-        for epoch in range(epochs_num):
-            optimizer.zero_grad()
-            yp = model(x_train)
-            train_loss = loss(yp, y_train.long())
-            train_acc = torch.sum(torch.max(yp, 1)[1] == y_train)
-            acc_train = (train_acc.float() / float(sample_num_train)) * 100
-
-            train_loss.backward()
-            optimizer.step()
-
-            yp_valid = model(x_valid)
-            yp_valid_acc = torch.sum(torch.max(yp_valid, 1)[1] == y_valid)
-            acc_valid = (yp_valid_acc.float() / float(sample_num_valid)) * 100
-
-        print('Epoch: ', epoch, 'loss: ', train_loss.item(), 'Train acc: ', acc_train.item(), 'Valid acc: ', acc_valid.item(), i, j, p)
+            """
+            Loss
+            """
+            loss = torch.nn.CrossEntropyLoss()
+            #loss= torch.nn.MSELoss()
 
 
 
-        yp_test = model(x_test)
-        yp_test_acc = torch.sum(torch.max(yp_test, 1)[1] == y_test)
-        acc_test= (yp_test_acc.float() / float(sample_num_test)) * 100
+            """
+            Optimizer
+            """
+            #optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+            optimizer = torch.optim.Adam(model.parameters(), lr=p)
+            p +=.2
+            """
+            Training
+            """
 
-        print( 'test acc: ', acc_test.item())
-        d.append(acc_test.item())
-        print('END!')
+            epochs_num = 200
+            sample_num_train = x_train.shape[0]
+            sample_num_test = x_test.shape[0]
+            sample_num_valid = x_valid.shape[0]
+
+
+            for epoch in range(epochs_num):
+                optimizer.zero_grad()
+                yp = model(x_train)
+                train_loss = loss(yp, y_train.long())
+                train_acc = torch.sum(torch.max(yp, 1)[1] == y_train)
+                acc_train = (train_acc.float() / float(sample_num_train)) * 100
+
+                train_loss.backward()
+                optimizer.step()
+
+                yp_valid = model(x_valid)
+                yp_valid_acc = torch.sum(torch.max(yp_valid, 1)[1] == y_valid)
+                acc_valid = (yp_valid_acc.float() / float(sample_num_valid)) * 100
+
+            print('Epoch: ', epoch, 'loss: ', train_loss.item(), 'Train acc: ', acc_train.item(), 'Valid acc: ', acc_valid.item(), i, j, p)
+
+
+
+            yp_test = model(x_test)
+            yp_test_acc = torch.sum(torch.max(yp_test, 1)[1] == y_test)
+            acc_test= (yp_test_acc.float() / float(sample_num_test)) * 100
+
+            print( 'test acc: ', acc_test.item())
+            d.append(acc_test.item())
+            print('END!')
 
 print(max(d))
