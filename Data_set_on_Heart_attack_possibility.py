@@ -80,11 +80,11 @@ raw_data = raw_data.drop(clean_outlier_data_of_chol[0][0])
 raw_data.chol =Data_cleaning.chol(raw_data.chol)
 raw_data.thalach =Data_cleaning.thalach(raw_data.thalach)
 raw_data.oldpeak =Data_cleaning.oldpeak(raw_data.oldpeak)
+#
+# print(raw_data.info())
 
-print(raw_data.info())
 
-
-df = raw_data.iloc[:, :9]
+df = raw_data.iloc[:, :4]
 label = raw_data.iloc[:, 13]
 print(df.shape)
 
@@ -95,6 +95,20 @@ x_train, x_test, y_train, y_test = train_test_split(df, label, test_size=0.2, sh
 x_train, x_valid, y_train, y_valid = train_test_split(x_train, y_train, test_size=0.1, shuffle=True,random_state=12)
 
 
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import roc_auc_score
+for i in range(3,15):
+    kmodel = KNeighborsClassifier(n_neighbors=i)
+    kmodel.fit(x_train, y_train)
+    hh = y_test.T
+    uuu = y_test.T
+    p = kmodel.predict(x_test)
+
+    acsc =roc_auc_score(y_test.T, p)
+    print(acsc)
+
+
+
 x_train = torch.tensor(x_train.values).float()
 x_test = torch.tensor(x_test.values).float()
 x_valid = torch.tensor(x_valid.values).float()
@@ -102,11 +116,14 @@ x_valid = torch.tensor(x_valid.values).float()
 y_train = torch.tensor(y_train.values).float()
 y_test = torch.tensor(y_test.values).float()
 y_valid = torch.tensor(y_valid.values).float()
-p=0.001
+
 d=[]
-for i in range(5, 20):
+
+for i in range(5, 15):
+
     for j in range(5, 15):
-        for k in range (100):
+            p = 0.01
+        #for k in range (30):
 
             Sample_num = x_train.shape[1]
             Class_num = 2
@@ -138,7 +155,7 @@ for i in range(5, 20):
             """
             #optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
             optimizer = torch.optim.Adam(model.parameters(), lr=p)
-            p +=.2
+            #p +=.001
             """
             Training
             """
